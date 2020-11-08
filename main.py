@@ -11,4 +11,8 @@ WORLD = [
 
 if __name__ == '__main__':
     agent = Agent(WORLD, WORLD[0][0])
-    print(agent.ask())
+    finished = False
+    while not finished:
+        x, y = agent.ask()
+        agent.tell(WORLD[x][y])
+        finished = agent.finished()
