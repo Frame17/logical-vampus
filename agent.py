@@ -10,7 +10,7 @@ class Event(Enum):
 
 
 class Agent:
-    def init(self, world, start_senses):
+    def __init__(self, world, start_senses):
         self.x = 0
         self.y = 0
         self.world = world

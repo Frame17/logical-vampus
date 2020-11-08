@@ -87,24 +87,25 @@ def print_world(world, agent):
         row_senses = []
         for j, cell in enumerate(row):
 
+            agent_s = ""
+            if agent["x"] == j and agent["y"] == i:
+                agent_s += "\33[32m♔\033[0m "
+
             icons = list()
             for object in OBJECTS:
                 if object in cell:
                     icons.append(object.value)
                     icons.append("\033[0m")
-            row_objects.append("|" + " ".join(icons) + " " * (
-                        8 - len(icons) - len(icons) // 2) + "|")
-
-            agent_s = ""
-            if agent["x"] == j and agent["y"] == i:
-                agent_s += "\33[32m♔ "
+            row_objects.append("|" + agent_s + " ".join(icons) +
+                               " "*(8 - (2 if len(agent_s) else 0) - len(icons) - len(icons)//2) + "|")
 
             icons = list()
             for sense in SENSES:
                 if sense in cell:
                     icons.append(sense.value)
                     icons.append("\033[0m")
-            row_senses.append("|" + agent_s + " ".join(icons) + " "*(8 - (2 if len(agent_s) else 0) - len(icons) - len(icons)//2) + "|")
+            row_senses.append("|" + " ".join(icons) + " " * (
+                        8 - len(icons) - len(icons) // 2) + "|")
 
         print("".join(row_objects))
         print("".join(row_senses))
