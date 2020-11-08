@@ -1,5 +1,5 @@
 # Byte-compiled / optimized / DLL files
-__pycache__/
+pycache/
 *.py[cod]
 *$py.class
 
@@ -92,7 +92,7 @@ ipython_config.py
 #Pipfile.lock
 
 # PEP 582; used by e.g. github.com/David-OConnor/pyflow
-__pypackages__/
+pypackages/
 
 # Celery stuff
 celerybeat-schedule
@@ -109,7 +109,7 @@ venv/
 ENV/
 env.bak/
 venv.bak/
-
+.idea
 # Spyder project settings
 .spyderproject
 .spyproject

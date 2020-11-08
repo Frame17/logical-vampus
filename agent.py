@@ -1,10 +1,16 @@
 from world import *
+from enum import Enum
+import random
 
-VAMPUS_KILLED = "vampus_killed"
-GOLD_FOUND = "gold_found"
+
+# Events
+class Event(Enum):
+    VAMPUS_KILLED = "vampus_killed"
+    GOLD_FOUND = "gold_found"
+
 
 class Agent:
-    def __init__(self, world, start_senses):
+    def init(self, world, start_senses):
         self.x = 0
         self.y = 0
         self.world = world
@@ -32,15 +38,15 @@ class Agent:
             if self.decide(info):
                 next_steps.add((x, y))
 
-        return random.choice(next_steps)
+        return random.choice(list(next_steps))
 
     @staticmethod
     def decide(infos):
         for info in infos:
-            if info[0] == SHINE:
+            if info[0] == Sense.SHINE:
                 return True
 
         return False
 
     def finished(self):
-        return len(list(filter(lambda fact: fact[0] == GOLD_FOUND, self.knowledge))) > 0
+        return len(list(filter(lambda fact: fact[0] == Event.GOLD_FOUND, self.knowledge))) > 0
