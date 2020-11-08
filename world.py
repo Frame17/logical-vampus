@@ -25,17 +25,21 @@ def generate_world():
     for x, y in neighbours(x, y):
         world[x][y].add(SMELL)
 
+    # generate pit, can be under vampus
     for i in range(0, 2):
         x, y = generate_position()
         world[x][y].add(PIT)
         for x, y in neighbours(x, y):
             world[x][y].add(WIND)
 
-    while len(world[x][y]) > 0:
+    # generate gold on empty position and not (0, 0)
+    while len(world[x][y]) > 0 or (x == 0 and y == 0):
         x, y = generate_position()
-    world[x][y] = GOLD
+    world[x][y].add(GOLD)
     for x, y in neighbours(x, y):
         world[x][y].add(SHINE)
+
+    return world
 
 
 def neighbours(x, y):
@@ -59,6 +63,3 @@ def generate_position():
         x = random.randint(0, 3)
         y = random.randint(0, 3)
     return x, y
-
-
-generate_world()
