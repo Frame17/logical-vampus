@@ -11,4 +11,4 @@ WORLD = [
 
 if __name__ == '__main__':
     agent = Agent(WORLD, WORLD[0][0])
-    print()
+    print(agent.ask())
