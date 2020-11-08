@@ -5,6 +5,7 @@ WIND = "wind"
 SMELL = "smell"
 SHINE = "shine"
 SCREAM = "scream"
+SENSES = [WIND, SMELL, SHINE, SCREAM]
 
 # OBJECTS
 GOLD = "gold"
