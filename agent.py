@@ -19,20 +19,21 @@ class Agent:
         :param senses: input in the form SENSES
         """
 
-        # add new information
-        for sense in senses:
-            # neighbours - safe
-            self.knowledge.append((sense,
-                                   [x for x in neighbours(self.x, self.y) if
-                                    x not in list(filter(lambda fact: SAFE == fact[0], self.knowledge))[0][1]]))
+        if (self.x, self.y) not in list(filter(lambda fact: SAFE == fact[0], self.knowledge))[0][1]:  # ignore revisited
+            # add new information
+            for sense in senses:
+                # neighbours - safe
+                self.knowledge.append((sense,
+                                       [x for x in neighbours(self.x, self.y) if
+                                        x not in list(filter(lambda fact: SAFE == fact[0], self.knowledge))[0][1]]))
 
-        # edit previously known information
-        if not self.is_dead():
-            for fact in self.knowledge:
-                if fact[0] != SAFE and (self.x, self.y) in fact[1]:
-                    fact[1].remove((self.x, self.y))
-                elif fact[0] == SAFE:
-                    fact[1].add((self.x, self.y))
+            # edit previously known information
+            if not self.is_dead():
+                for fact in self.knowledge:
+                    if fact[0] != SAFE and (self.x, self.y) in fact[1]:
+                        fact[1].remove((self.x, self.y))
+                    elif fact[0] == SAFE:
+                        fact[1].add((self.x, self.y))
 
     def ask(self):
         """
@@ -43,9 +44,13 @@ class Agent:
         return self.x, self.y
 
     def decide(self, neighbours):
-        # for x, y in neighbours:
-        #     info = list(filter(lambda fact: (x, y) in fact[1], self.knowledge))
+        # remove possibly dangerous cases
+        candidates = list(
+            filter(lambda arg: len(list(filter(lambda fact: SAFE != fact[0] and (arg[0], arg[1]) in fact[1], self.knowledge))) == 0,
+                   neighbours))
 
+        if candidates != []:
+            return random.choice(candidates)
         return random.choice(neighbours)
 
     def finished(self):
