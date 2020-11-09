@@ -43,7 +43,7 @@ class Agent:
     @staticmethod
     def decide(infos):
         for info in infos:
-            if info[0] == Sense.SHINE:
+            if info[0] == SHINE:
                 return True
 
         return False

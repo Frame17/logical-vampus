@@ -3,10 +3,10 @@ from agent import Agent
 
 # WORLD = generate_world()
 WORLD = [
-    [{Sense.SHINE}, set(), set(), set()],
-    [{Object.GOLD}, {Sense.SHINE}, set(), set()],
-    [{Sense.WIND, Sense.SHINE, Sense.SMELL}, {Sense.WIND}, set(), set()],
-    [{Object.PIT, Object.VAMPUS}, {Object.PIT}, set(), set()]
+    [set(["shine"]), set(), set(), set()],
+    [set(["gold"]), set(["shine"]), set(), set()],
+    [set(["wind", "shine", "smell"]), set(["wind"]), set(), set()],
+    [set(["pit", "vampus"]), set(["pit"]), set(), set()]
 ]
 
 if __name__ == '__main__':
