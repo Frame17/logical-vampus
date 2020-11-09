@@ -15,6 +15,8 @@ PIT = "pit"
 
 OBJECTS = [GOLD, VAMPUS, PIT]
 
+SAFE = "safe"
+
 view = {
     WIND: u"\33[31m☤",
     SMELL: u"\33[35m♨️",
@@ -51,8 +53,7 @@ def generate_world():
     while len(world[x][y]) > 0 or (x == 0 and y == 0):
         x, y = generate_position()
     world[x][y].add(GOLD)
-    for x, y in neighbours(x, y):
-        world[x][y].add(SHINE)
+    world[x][y].add(SHINE)
 
     return world
 
