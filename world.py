@@ -91,7 +91,7 @@ def print_world(world, agent):
         for j, cell in enumerate(row):
 
             agent_s = ""
-            if agent["x"] == j and agent["y"] == i:
+            if agent[1] == j and agent[0] == i:
                 agent_s += "\33[32m♔\033[0m "
 
             icons = list()

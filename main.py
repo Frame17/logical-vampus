@@ -5,11 +5,15 @@ WORLD = generate_world()
 
 if __name__ == '__main__':
     agent = Agent(WORLD, WORLD[0][0])
-    print_world(WORLD, {"x": 0, "y": 0})
+    print_world(WORLD, (0, 0))
     finished = False
     while not finished:
         x, y = agent.ask()
-        print_world(WORLD, {"x": y, "y": x})
+        print_world(WORLD, (x, y))
+
+        if agent.is_lost():
+            print('\x1b[6;33;46m' + 'Boi seems to lost in 3 trees!' + '\x1b[0m')
+            break
 
         agent.tell(WORLD[x][y])
         if agent.won():

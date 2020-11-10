@@ -3,7 +3,7 @@ import random
 
 
 class Agent:
-    def __init__(self, world, start_senses):
+    def __init__(self, world, start_senses, max_steps=100):
         self.x = 0
         self.y = 0
         self.world = world
@@ -11,6 +11,8 @@ class Agent:
         safe_set.add((0, 0))
         self.knowledge = [(SAFE, safe_set)]
         self.tell(start_senses)
+        self.curr_step = 0
+        self.max_steps = max_steps
 
     def tell(self, senses):
         """
@@ -68,6 +70,7 @@ class Agent:
         :return: next step
         """
         self.x, self.y = self.decide(neighbours(self.x, self.y))
+        self.curr_step += 1
         return self.x, self.y
 
     def decide(self, neighbours):
@@ -86,3 +89,6 @@ class Agent:
 
     def is_dead(self):
         return VAMPUS in self.world[self.x][self.y] or PIT in self.world[self.x][self.y]
+
+    def is_lost(self):
+        return self.curr_step > self.max_steps
