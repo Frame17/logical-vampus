@@ -23,9 +23,11 @@ class Agent:
             # add new information
             for sense in senses:
                 # neighbours - safe
-                self.knowledge.append((sense,
-                                       [x for x in neighbours(self.x, self.y) if
-                                        x not in list(filter(lambda fact: SAFE == fact[0], self.knowledge))[0][1]]))
+                self.knowledge.append(
+                    (sense,
+                     set([x for x in neighbours(self.x, self.y) if
+                          x not in list(filter(lambda fact: SAFE == fact[0], self.knowledge))[0][1]]))
+                )
 
             # edit previously known information
             if not self.is_dead():
@@ -46,15 +48,16 @@ class Agent:
     def decide(self, neighbours):
         # remove possibly dangerous cases
         candidates = list(
-            filter(lambda arg: len(list(filter(lambda fact: SAFE != fact[0] and (arg[0], arg[1]) in fact[1], self.knowledge))) == 0,
+            filter(lambda arg: len(
+                list(filter(lambda fact: SAFE != fact[0] and (arg[0], arg[1]) in fact[1], self.knowledge))) == 0,
                    neighbours))
 
-        if candidates != []:
+        if candidates:
             return random.choice(candidates)
         return random.choice(neighbours)
 
-    def finished(self):
-        return SHINE in self.world[self.x][self.y] or self.is_dead()
+    def won(self):
+        return SHINE in self.world[self.x][self.y]
 
     def is_dead(self):
         return VAMPUS in self.world[self.x][self.y] or PIT in self.world[self.x][self.y]
