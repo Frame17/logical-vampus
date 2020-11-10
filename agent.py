@@ -22,12 +22,28 @@ class Agent:
         if (self.x, self.y) not in list(filter(lambda fact: SAFE == fact[0], self.knowledge))[0][1]:  # ignore revisited
             # add new information
             for sense in senses:
-                # neighbours - safe
-                self.knowledge.append(
-                    (sense,
-                     set([x for x in neighbours(self.x, self.y) if
-                          x not in list(filter(lambda fact: SAFE == fact[0], self.knowledge))[0][1]]))
-                )
+                vampus_info = list(filter(lambda fact: SMELL == fact[0], self.knowledge))
+                neighbours_unsafe = set([x for x in neighbours(self.x, self.y) if
+                                         x not in list(filter(lambda fact: SAFE == fact[0], self.knowledge))[0][1]])
+                # second time we hear smell
+                if sense == SMELL and vampus_info != [] and list(
+                        filter(lambda fact: VAMPUS == fact[0], self.knowledge)) == []:
+                    possible_vampus = vampus_info[0][1].intersection(neighbours_unsafe)
+                    if len(possible_vampus) == 1:
+                        for fact in self.knowledge:
+                            if fact[0] == SMELL:
+                                self.knowledge.remove(fact)
+                        self.knowledge.append((VAMPUS, possible_vampus))
+
+                pit_infos = list(filter(lambda fact: WIND == fact[0], self.knowledge))
+                for pit_info in pit_infos:
+                    possible_pit = pit_info[1].intersection(neighbours_unsafe)
+                    if possible_pit:
+                        self.knowledge.remove(pit_info)
+                        self.knowledge.append((PIT, possible_pit))
+                else:
+                    # neighbours - safe
+                    self.knowledge.append((sense, neighbours_unsafe))
 
             # edit previously known information
             if not self.is_dead():

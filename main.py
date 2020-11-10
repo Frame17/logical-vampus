@@ -1,13 +1,20 @@
 from world import *
 from agent import Agent
 
-# WORLD = generate_world()
-WORLD = [
-    [set(), set(), set(), set()],
-    [set(["wind", "smell"]), set(["wind"]), set(), set()],
-    [set(["pit", "vampus"]), set(["pit", "smell"]), set(), set()],
-    [set(["gold", "shine"]), set(), set(), set()],
-]
+WORLD = generate_world()
+# WORLD = [
+#     [set(), set(), set(), set()],
+#     [{"wind", "smell"}, set(["wind"]), set(), set()],
+#     [set(["pit", "vampus"]), set(["pit", "smell"]), set(), set()],
+#     [set(["gold", "shine"]), set(), set(), set()],
+# ]
+
+# WORLD = [
+#     [set(), set(["wind"]), set(), set(["gold", "shine"])],
+#     [set(["wind"]), set(["pit"]), set(["wind"]), set()],
+#     [set(), set(["wind"]), set(), set()],
+#     [set(), set(), set(), set()],
+# ]
 
 if __name__ == '__main__':
     agent = Agent(WORLD, WORLD[0][0])
