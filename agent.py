@@ -53,6 +53,15 @@ class Agent:
                     elif fact[0] == SAFE:
                         fact[1].add((self.x, self.y))
 
+        # fact-checking
+        neighbours_unsafe = set([x for x in neighbours(self.x, self.y) if
+                                 x not in list(filter(lambda fact: SAFE == fact[0], self.knowledge))[0][1]])
+        for fact in self.knowledge:
+            if fact[0] != SAFE:
+                for neighbour in neighbours_unsafe:
+                    if neighbour in fact[1] and len(fact[1]) > 1 and fact[0] not in senses:
+                        fact[1].remove(neighbour)
+
     def ask(self):
         """
         Decides where to go from here
